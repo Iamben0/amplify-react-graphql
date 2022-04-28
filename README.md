@@ -2,13 +2,13 @@
 Labs and assignments
 
 LAB
-  - Lab 1 <done>
-  - Lab 2 <done>
-  - Lab 3 <done>
+  - Lab 1 completed <2.8/3>
+  - Lab 2 completed </3>
+  - Lab 3 completed </3>
   - Lab 4
   - Lab 5
   
 Assignment
-  - A1 <done>
-  - A2
+  - A1 completed </4>
+  - A2 incomplete
   - A3
