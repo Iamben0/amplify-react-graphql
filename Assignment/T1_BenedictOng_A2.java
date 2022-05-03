@@ -14,10 +14,9 @@ public class T1_BenedictOng_A2 {
     private static int quantity, batteryDuration, chargingDuration;
     private static double price;
     private static int option;
-    
+
     public static void main(String[] args) {
         getOptions();
-        System.out.println("End of program");
     }
 
     public static void getOptions() {
@@ -28,7 +27,7 @@ public class T1_BenedictOng_A2 {
             System.out.println("3 Show all inventory by car model");
             System.out.println("4 Search inventory by car model");
             System.out.println("5 Search inventory by car price");
-            System.out.println("6 Search inventory by car batter duration");
+            System.out.println("6 Search inventory by car battery duration");
             System.out.println("7 Quit");
             System.out.print("Your selection: ");
                    
@@ -39,15 +38,50 @@ public class T1_BenedictOng_A2 {
                 System.out.println("1 Ordinary Toy Car (OTC-XXX)");
                 System.out.println("2 Electric Toy Car (ETC-XXX)");
                 System.out.print("Your Selection: ");
-
-                int selection = input.nextInt();
+                // int selection;
+                // do {
+                //     System.out.println("1 Ordinary Toy Car (OTC-XXX)");
+                //     System.out.println("2 Electric Toy Car (ETC-XXX)");
+                //     System.out.print("Your Selection: ");                        
+                //     while (!input.hasNextInt()) {
+                //         System.out.println("Please select 1 or 2 only.");
+                //         System.out.println(line);
+                //         input.next();                               // To prevent print from looping infinitely in while loop and clear buffer
+                //     } 
+                //     selection = input.nextInt();                    // Input selection
+                // } while (selection < 0);
+                
+                int selection = input.nextInt();                    
                 System.out.print(line);
                 input.nextLine();                                    // Clear Input buffer
-
                 // get input for Ordinary Toy Car
                 if (selection == 1) {
                     System.out.print("\nModel Code: ");           // get input for Ordinary Toy Car 
                     modelCode = input.next();
+
+
+                    /*                    
+                    // Validation to make sure PRICE is positive and accept numerals only            
+                    do {
+                        System.out.print("Price: ");                        
+                        while (!input.hasNextDouble()) {
+                            System.out.println("Please input numbers only.");
+                            input.next();                               // To prevent print from looping infinitely in while loop and clear buffer
+                        } 
+                        price = input.nextDouble();                    // Input price
+                    } while (price < 0);
+
+                    // Validation to make sure QUANTITY is positive/0 and accept numerals only      
+                    do {
+                        System.out.print("Quantity: ");                        
+                        while (!input.hasNextDouble()) {
+                            System.out.println("Please input numbers only.");
+                            input.next();                               
+                        } 
+                        quantity = input.nextDouble();                    // Input quantity
+                    } while (price <= 0);
+                    */
+
 
                     System.out.print("Price: ");
                     price = input.nextDouble();
@@ -81,9 +115,8 @@ public class T1_BenedictOng_A2 {
                             }                   
                         }
                     }
-
-                    
-                } else if (selection == 2) {                           
+                } 
+                else if (selection == 2) {                           
                     System.out.print("\nModel Code: ");           // get input for Eletric Toy Car 
                     modelCode = input.next();
 
@@ -121,8 +154,9 @@ public class T1_BenedictOng_A2 {
                     System.out.println("\nPlease select 1 or 2 only.");
                     System.out.println(line);
                 }
-            } else if (option == 2) {
-                System.out.print("Model Code: ");                 // find the model code
+            } 
+            else if (option == 2) {
+                System.out.print("Model Code: ");   
                 modelCode = input.next();
                 boolean exists = false;
 
@@ -139,18 +173,21 @@ public class T1_BenedictOng_A2 {
                         }
                     }
                 }   
-                if (exists == false) {                                   // does not exist in arraylist
+                // does not exist in arraylist
+                if (exists == false) {                               
                 	System.out.println("Model ID does not exists.");
                     System.out.println(line);
                 }
-            } else if (option == 3) {
+            } 
+            else if (option == 3) {
                 for (ToyCar tc : inventoryList) {
                     System.out.println(tc);
                     System.out.println();
                 }
                 System.out.println(line);
-            } else if (option == 4) {
-                System.out.print("Model Code: ");           // get input for Model code
+            }
+            else if (option == 4) {
+                System.out.print("Model Code: ");  
                 modelCode = input.next();
                 System.out.println();
                 boolean matchModel = false;
@@ -164,11 +201,47 @@ public class T1_BenedictOng_A2 {
                     System.out.println("No matching Model Code found.");
                 }
                 System.out.println(line);
-            } else if (option == 5) {
-
-            } else if (option == 6) {
-
-            } else if (option == 7) {
+            } 
+            else if (option == 5) {
+                System.out.print("Please enter a lower bound: ");
+                int lowerBound = input.nextInt();
+                System.out.print("Please enter an upper bound: ");
+                int upperBound = input.nextInt();
+                boolean noUpperAndLower = true;
+                for (ToyCar tc : inventoryList) {
+                    if (tc.getPrice() >= lowerBound && tc.getPrice() <= upperBound) {
+                        System.out.println(tc.toString());
+                        System.out.println();
+                        noUpperAndLower = false;
+                    }
+                }
+                System.out.println(line);
+                if (noUpperAndLower) {
+                    System.out.println("There is no matching model that matches the price.");
+                    System.out.println(line);
+                }
+            } 
+            else if (option == 6) {
+                System.out.print("Please enter a battery duration: ");
+                int batteryValue = input.nextInt();
+                boolean noBatteryValue = true;
+                for (ToyCar tc : inventoryList) {
+                    if (tc instanceof ToyCarElect) { 
+                        ToyCarElect temp = (ToyCarElect)tc;         // Downcasting
+                        if (temp.getBatteryDuration() >= batteryValue) {
+                            System.out.println(tc.toString());
+                            System.out.println();
+                            noBatteryValue = false;
+                        }
+                    }
+                }
+                System.out.println(line);
+                if (noBatteryValue) {
+                    System.out.println("There is no matching model that matches the battery duration.");
+                    System.out.println(line);
+                }
+            } 
+            else if (option == 7) {
                 System.out.println("Quit\n");
             } else 
                 System.out.println("Please enter 1, 2, 3, 4, 5, 6 or 7 only.\n");
@@ -179,14 +252,20 @@ public class T1_BenedictOng_A2 {
 
 class ToyCar {
     // Instance variables
-    String modelCode;
-    double price;
-    int quantity;
+    private String modelCode;
+    private double price;
+    private int quantity;
 
     // Constructor
     public ToyCar(String modelCode, double price, int quantity) {
         this.modelCode = modelCode;
+
+        if (price < 0.00)           // validate price
+            throw new IllegalArgumentException("Price cannot be negative.");
         this.price = price;
+            
+        if (quantity < 0)           // validate quantity
+            throw new IllegalArgumentException("Quantity cannot be negative.");
         this.quantity = quantity;
     }
 
@@ -209,15 +288,22 @@ class ToyCar {
     }
 
     public void setPrice(double price) {
-        this.price = price;
-        if (price < 0)               // validation
-            price = 0;
+        if (price >= 0.00)               // validation: price can't be negative
+            this.price = price;
+
+        /*if (price < 0.00)           // validate price
+            throw new IllegalArgumentException("Price cannot be negative.");
+        this.price = price;*/
     }
 
     public void setQuantity(int quantity) {
-        this.quantity = quantity;
-        if (quantity < 0)            // validation      
-            quantity = 0;
+        if (quantity >= 0)               // validation: quantity can't be negative
+            this.quantity = quantity;
+        
+        /*if (quantity < 0)           // validate quantity
+            throw new IllegalArgumentException("Quantity cannot be negative.");
+        this.quantity = quantity;*/
+            
     }
 
     // Calulate total inventory worth method
@@ -244,8 +330,8 @@ class ToyCar {
 }
 
 class ToyCarElect extends ToyCar {
-    int batteryDuration;
-    int chargingDuration;
+    private int batteryDuration;
+    private int chargingDuration;
 
     public ToyCarElect(String modelCode, double price, int quantity, int batteryDuration, int chargingDuration) {
         super(modelCode, price, quantity);
@@ -264,11 +350,13 @@ class ToyCarElect extends ToyCar {
 
     // Setters 
     public void setBatteryDuration(int batteryDuration) {
-        this.batteryDuration = batteryDuration;
+        if (batteryDuration >= 0)               // validation: batteryDuration can't be negative
+            this.batteryDuration = batteryDuration;
     }
 
     public void setChargingDuration(int chargingDuration) {
-        this.chargingDuration = chargingDuration;
+        if (chargingDuration >= 0)               // validation: chargingDuration can't be negative
+            this.chargingDuration = chargingDuration;
     }
 
     // Override getInsuranceCost method
